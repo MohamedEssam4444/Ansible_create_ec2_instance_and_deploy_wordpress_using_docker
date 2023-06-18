@@ -17,6 +17,6 @@
         ports:
           - 8080
         cidr_ip: "0.0.0.0/0"
-        rule_desc: "allow port 80 to all the world"
+        rule_desc: "allow port 8080 to all the world"
         
   register: security_group
