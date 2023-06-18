@@ -14,3 +14,7 @@
       assign_public_ip: true
     security_group: "{{ instance_name }}-sg"
   register: ec2
+
+- name: get public ip and add it in the inventory
+  shell: |
+    aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=web" --output text >> ../../../inventory/ec2
