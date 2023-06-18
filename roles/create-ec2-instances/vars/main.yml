@@ -1,0 +1,10 @@
+---
+# vars file for create-ec2-instances
+
+region_name: 'us-east-1'
+key_name: 'my_keypair'
+ami_id: 'ami-022e1a32d3f742bd8'
+instance_type: 't2.micro'
+instance_name: 'web'
+subnet_id: 'subnet-05b8963fa97755555' # to be changed
+vpc_id: 'vpc-05a06b915ed644197' # to be changed

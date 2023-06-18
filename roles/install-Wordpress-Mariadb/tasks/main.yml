@@ -1,0 +1,50 @@
+---
+
+- name: Deploy MariaDB server
+  docker_container:
+    image: mariadb
+    name: mariadb
+    volumes:
+      - "{{db_volume}}:/var/lib/mysql"
+    env:
+      MYSQL_ROOT_PASSWORD: nopassword
+      MYSQL_PASSWORD: nopassword
+      MYSQL_DATABASE: db
+      MYSQL_USER: admin
+
+- name: Deploy WordPress
+  docker_container:
+    image: wordpress
+    name: wordpress
+    restart_policy: always
+    ports:
+      - "8080:80"
+    links:
+      - "{{db_volume}}:/var/lib/mysql"
+    volumes:
+      - "{{wordpress}}:/var/www/html"
+    env:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_PASSWORD: nopassword
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_NAME: db
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'WPLANG', 'en_US');
+
+      
+- name: download wordpress
+  shell: |
+    sudo docker exec wordpress curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
+- name: change permissions to wp-cli
+  shell: |
+    sudo docker exec wordpress chmod +x wp-cli.phar 
+
+
+- name: configure wp-cli to be in the right path
+  shell: |
+    sudo docker exec wordpress mv wp-cli.phar /usr/local/bin/wp
+
+- name: configure wordpress and make a test blog post
+  shell: |
+    sudo docker exec wordpress wp core install --url=http://3.90.21.206:8080 --title="Kushal-Test-Blog" --admin_user=ADMIN_USERNAME --admin_password=ADMIN_PASSWORD --admin_email=ADMIN_EMAIL@test.com --allow-root

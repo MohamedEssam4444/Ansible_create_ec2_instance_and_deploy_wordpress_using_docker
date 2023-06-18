@@ -1,0 +1,17 @@
+# install docker wordpress and mariadb on the instance
+- hosts: web
+  gather_facts: False
+  user: ec2-user
+  become: true
+  become_method: sudo
+  become_user: root  
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    ansible_host_key_checking: false
+    ansible_stdout_callback: yaml
+    db_volume: mariadb
+    wordpress: wordpress
+
+  roles:
+    - install-docker
+    - install-Wordpress-Mariadb

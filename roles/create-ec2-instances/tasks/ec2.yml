@@ -1,0 +1,16 @@
+- name: Create EC2 instances
+  ec2_instance:
+    key_name: "{{ key_name }}"
+    region: "{{ region_name }}"
+    instance_type: "{{ instance_type }}"
+    image_id: "{{ ami_id }}"
+    vpc_subnet_id: "{{ subnet_id }}"
+    wait: yes
+    tags:
+      Name: web
+      Env: sandbox
+    exact_count: 1
+    network:
+      assign_public_ip: true
+    security_group: "{{ instance_name }}-sg"
+  register: ec2
