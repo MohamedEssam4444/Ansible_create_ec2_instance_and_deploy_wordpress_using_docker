@@ -17,4 +17,7 @@
 
 - name: get public ip and add it in the inventory
   shell: |
-    aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=web" --output text >> ../../../inventory/ec2
+    aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=web" --output text >> inventory/ec2
+
+- name: Refresh inventory to ensure new instances exist in inventory
+  ansible.builtin.meta: refresh_inventory

@@ -15,11 +15,12 @@
     - yum-utils
     - device-mapper-persistent-data
     - lvm2
+    - docker
 
 - name: install python3, ansible and docker
   shell: |
     yum install python3-pip
     pip3 install ansible
-    pip install docker-py
+    pip3 install docker-py
     systemctl start docker
     systemctl enable docker

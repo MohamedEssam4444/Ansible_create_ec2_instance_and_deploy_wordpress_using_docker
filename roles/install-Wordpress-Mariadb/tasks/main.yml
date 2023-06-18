@@ -47,4 +47,4 @@
 
 - name: configure wordpress and make a test blog post
   shell: |
-    sudo docker exec wordpress wp core install --url=http://3.90.21.206 --title="Kushal-Test-Blog" --admin_user=ADMIN_USERNAME --admin_password=ADMIN_PASSWORD --admin_email=ADMIN_EMAIL@test.com --allow-root
+    sudo docker exec wordpress wp core install --url=localhost --title="Kushal-Test-Blog" --admin_user=ADMIN_USERNAME --admin_password=ADMIN_PASSWORD --admin_email=ADMIN_EMAIL@test.com --allow-root
